@@ -6,3 +6,26 @@ exports.getIndex = (req, res) => {
   })
   
 }
+
+exports.stuffToDo = (req, res) => {
+  res.status(200)
+  res.send({
+    msg: 'darn',
+    data: 'sorry to burst your bubble so soon but I have nothing setup here yet. Try /add/#/# and see what happens...',
+  })
+  
+}
+
+
+exports.addNums = (req, res) => {
+  const num1 = +req.params.firstNum
+  const num2 = +req.params.secondNum
+  const result = num1 + num2
+
+  res.status(200)
+  res.send({
+    msg: 'I added some some numbers for you',
+    data: result,
+  })
+  
+}
