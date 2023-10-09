@@ -22,7 +22,7 @@ exports.stuffToDo = (req, res) => {
 }
 
 
-exports.addNums = (req, res) => {
+exports.getAddNums = (req, res) => {
   const num1 = +req.params.firstNum
   const num2 = +req.params.secondNum
   const result = num1 + num2
@@ -34,6 +34,21 @@ exports.addNums = (req, res) => {
   })
   
 }
+
+exports.postAddNums = (req, res) => {
+  const num1 = +req.params.firstNum
+  const num2 = +req.params.secondNum
+  const result = num1 + num2
+
+  res.status(200)
+  res.send({
+    msg: 'I added some some numbers for you',
+    data: result,
+  })
+  
+}
+
+
 
 exports.postEchoValue = (req, res) => {
   const value = req.body.value || "i guess you didn't send anything..."

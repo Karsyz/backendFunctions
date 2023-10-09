@@ -8,7 +8,8 @@ router.get('/', homeController.getIndex);
 
 router.get('/stuffToDo', homeController.stuffToDo);
 
-router.get('/add/:firstNum/:secondNum', homeController.addNums);
+router.get('/add/:firstNum/:secondNum', homeController.getAddNums);
+router.post('/add', homeController.postAddNums);
 
 router.post('/echoValue', homeController.postEchoValue);
 router.get('/echoValue/:value', homeController.getEchoValue);

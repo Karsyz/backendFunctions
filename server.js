@@ -6,6 +6,7 @@ const mainRoutes = require('./routes/main');
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
 
+// cors options
 app.options('*', cors())
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
