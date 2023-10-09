@@ -36,8 +36,8 @@ exports.getAddNums = (req, res) => {
 }
 
 exports.postAddNums = (req, res) => {
-  const num1 = +req.params.firstNum
-  const num2 = +req.params.secondNum
+  const num1 = +req.body.firstNum
+  const num2 = +req.body.secondNum
   const result = num1 + num2
 
   res.status(200)
