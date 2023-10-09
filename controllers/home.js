@@ -1,3 +1,8 @@
+const bcrypt = require("bcrypt");
+const Cryptr = require('cryptr');
+const Data = require("../models/Data");
+const generator = require('generate-password');
+
 exports.getIndex = (req, res) => {
   res.status(200)
   res.send({
@@ -96,5 +101,60 @@ exports.getMakeTitleCase = (req, res) => {
   })
 }
 
+// takes in a string from req.body, stores the data
+exports.dataDeadDrop = async (req, res) => {
+  try {
+    const inputString = req.body.value || "i guess you didn't send anything..."
+    const key1 = generator.generate({
+      length: 12,
+      numbers: true
+    });
+    const key2 = generator.generate({
+      length: 12,
+      numbers: true
+    });
+
+    const cryptr = new Cryptr(key2);
+    const encryptedData = cryptr.encrypt(inputString, { encoding: 'base64', pbkdf2Iterations: 10000, saltLength: 10 })
+
+    const data = new Data({
+      storedData: encryptedData,
+      key1: key1,
+      key2: key2,
+    });
+
+    const dbRes = await data.save()
+    res.status(200).send({
+        msg: "Here are your keys. Don't lose them; and remember, they only work once",
+        key1: key1,
+        key2: key2,
+      })
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ msg: "Error saving data to database" });
+    return;
+  }
+  
+};
 
 
+// takes in a string from req.body, stores the data
+exports.retrieveDeadDrop = async (req, res) => {
+  try {
+    const data = await Data.findOne({key1: req.body.key1})
+    console.log(data)
+    const cryptr = new Cryptr(req.body.key2);
+    const decryptedData = cryptr.decrypt(data.storedData);
+    const deleted = await Data.deleteOne({key1: req.body.key1})
+    res.status(200).send({
+        msg: "Here's your data, a pleasure doing business with you",
+        data: decryptedData,
+      })
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ msg: "Server Error" });
+    return;
+  }
+  
+};

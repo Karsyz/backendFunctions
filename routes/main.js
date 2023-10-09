@@ -17,4 +17,7 @@ router.get('/echoValue/:value', homeController.getEchoValue);
 router.post('/makeTitleCase', homeController.postMakeTitleCase);
 router.get('/makeTitleCase/:string', homeController.getMakeTitleCase);
 
+router.post('/dataDeadDrop', homeController.dataDeadDrop);
+router.post('/retrieveDeadDrop', homeController.retrieveDeadDrop);
+
 module.exports = router;
