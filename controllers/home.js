@@ -1,7 +1,7 @@
 exports.getIndex = (req, res) => {
   res.status(200)
   res.send({
-    msg: 'hey, this is a response from backendFunctions',
+    msg: 'hey, thanks for checking out backendFunctions',
     data: ['data usually goes here or something, i dunno.  Here is a string in an array for now.', 'TBH, I just build this server / api because I was bored one Sunday and needed the practice making things.', 'The backend is a Node/Express server.  It is very very simple, as it should be really.', 'Anyways, I am not going to ramble on anymore than I have to, but I did want to welcome you to my humble api.', 'Hit the endpoint /stuffToDo for more info maybe as time goes on.', 'Hopefully I will add more to this api later on.', 'Maybe make a react frontend for this and make each of these strings in this array sentences in a paragraph or something, I dunno.  Have some fun with it.'],
   })
   
@@ -11,7 +11,10 @@ exports.stuffToDo = (req, res) => {
   res.status(200)
   res.send({
     msg: 'darn',
-    data: 'sorry to burst your bubble so soon but I have nothing setup here yet. Try /add/#/# and see what happens...',
+    data: [
+      "Sorry there isn't much to show here yet", 
+      'Try get:/add/#/# and see what happens...', 
+      "/echoValue, takes in a urlencoded form data property called 'sentValue' and then echos it back to you",]
   })
   
 }
@@ -29,3 +32,52 @@ exports.addNums = (req, res) => {
   })
   
 }
+
+exports.postEchoValue = (req, res) => {
+  const value = req.body.value || "i guess you didn't send anything..."
+  res.status(200)
+  res.send({
+    msg: "This function will echo whatever you send to it",
+    data: value,
+  })
+  
+}
+
+exports.getEchoValue = (req, res) => {
+  const value = req.params.value || "i guess you didn't send anything..."
+  res.status(200)
+  res.send({
+    msg: "This function will echo whatever you send to it",
+    data: value,
+  })
+  
+}
+
+
+exports.postMakeTitleCase = (req, res) => {
+  const string = req.body.value || "i guess you didn't send anything..."
+  const title = string
+    .split(' ')
+    .map(e => e.slice(0,1).toUpperCase() + e.slice(1, e.length).toLowerCase() ).join(' ')
+
+  res.status(200)
+  res.send({
+    msg: "Here's your title bud",
+    data: title,
+  })
+  
+}
+
+exports.getMakeTitleCase = (req, res) => {
+  const string = req.params.string || "i guess you didn't send anything..."
+  const title = string
+    .split(' ')
+    .map(e => e.slice(0,1).toUpperCase() + e.slice(1, e.length).toLowerCase() ).join(' ')
+
+  res.status(200)
+  res.send({
+    msg: "Here's your title bud",
+    data: title,
+  })
+}
+

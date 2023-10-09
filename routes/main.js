@@ -10,5 +10,10 @@ router.get('/stuffToDo', homeController.stuffToDo);
 
 router.get('/add/:firstNum/:secondNum', homeController.addNums);
 
+router.post('/echoValue', homeController.postEchoValue);
+router.get('/echoValue/:value', homeController.getEchoValue);
+
+router.post('/makeTitleCase', homeController.postMakeTitleCase);
+router.get('/makeTitleCase/:string', homeController.getMakeTitleCase);
 
 module.exports = router;
