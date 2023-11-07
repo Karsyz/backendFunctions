@@ -5,6 +5,8 @@ const flash = require("express-flash");
 const logger = require("morgan");
 const cors = require('cors');
 const mainRoutes = require('./routes/main');
+const apiRoutes = require('./routes/api');
+const grammasterRoutes = require('./routes/grammaster');
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -53,6 +55,8 @@ app.use(flash());
 
 //Setup Routes For Which The Server Is Listening
 app.use("/", mainRoutes);
+app.use("/api", apiRoutes);
+app.use("/grammaster", grammasterRoutes);
 
 // //Server Running
 // app.listen(process.env.PORT, () => {
