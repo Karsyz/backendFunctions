@@ -29,8 +29,6 @@ mongoose.connect(process.env.DB_STRING, {
   console.log(error)
 })
 
-
-
 // cors options
 app.options('*', cors())
 app.use((req, res, next) => {

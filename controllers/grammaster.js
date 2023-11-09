@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const Cryptr = require('cryptr');
 const Recipe = require("../models/Recipe");
 const generator = require('generate-password');
+const cloudinary = require("../middleware/cloudinary");
 
 exports.getRecipes = async (req, res) => {
   try {
@@ -52,6 +53,7 @@ exports.createRecipe = async (req, res) => {
       totalQuantity: 1,
       imageUrl: 'https://placehold.co/500x300',
       imgAlt: 'placeholder',
+      cloudinaryId: '',
       ingredients: [],
       instructions: [],
       previousVersions: [],
@@ -73,18 +75,34 @@ exports.updateRecipe = async (req, res) => {
   try {
     let recipe = await Recipe.findOne({_id: req.body.id})
 
-    // recipe.previousVersions.push(JSON.stringify(recipe))
-
     recipe.name = req.body.name
     recipe.totalMass = req.body.totalMass
     recipe.totalRecipeMass = req.body.totalRecipeMass
     recipe.recipeQuantity = req.body.recipeQuantity
     recipe.totalQuantity = req.body.totalQuantity
-    recipe.imageUrl = req.body.imageUrl
-    recipe.imgAlt = req.body.imgAlt
     recipe.ingredients = JSON.parse(req.body.ingredients)
     recipe.instructions = JSON.parse(req.body.instructions)
-    
+
+    console.log(req.body.imageData)
+    if (req.body.imageData === 'true') {
+      console.log('stuff runs')
+      // Get existing cloudinary Id from db
+      const existingCloudinaryId = recipe.cloudinaryId
+  
+      // Delete existing image from cloudinary if not default image
+      if (existingCloudinaryId !== "") {
+        const exId = await cloudinary.uploader.destroy(existingCloudinaryId);
+      }
+  
+      // Upload new image to cloudinary
+      const result = await cloudinary.uploader.upload(req.files[0].path, {width: 500, height: 300, crop: "fill", folder: "gramMaster"})
+
+      // Update Db
+      recipe.imageUrl = result.secure_url
+      recipe.imgAlt = result.secure_url
+      recipe.cloudinaryId = result.public_id
+    }
+
     const newSave = await recipe.save()
 
     res.status(200)
@@ -96,4 +114,6 @@ exports.updateRecipe = async (req, res) => {
     console.error(error)
   }
 }
+
+
 

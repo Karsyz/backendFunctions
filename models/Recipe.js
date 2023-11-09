@@ -8,6 +8,7 @@ const RecipeSchema = new mongoose.Schema({
   totalQuantity: Number,
   imageUrl: String,
   imgAlt: String,
+  cloudinaryId: String,
   ingredients: [{
     name: String, 
     massTotal: Number, 
@@ -24,4 +25,3 @@ const RecipeSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Recipe", RecipeSchema);
-
