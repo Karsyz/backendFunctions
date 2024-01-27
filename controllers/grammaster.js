@@ -83,7 +83,6 @@ exports.updateRecipe = async (req, res) => {
     recipe.ingredients = JSON.parse(req.body.ingredients)
     recipe.instructions = JSON.parse(req.body.instructions)
 
-    console.log(req.body.imageData)
     if (req.body.imageData === 'true') {
       console.log('stuff runs')
       // Get existing cloudinary Id from db
