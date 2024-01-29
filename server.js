@@ -42,15 +42,15 @@ mongoose.connect(process.env.DB_STRING, {
 
 // cors options
 // app.options('*', cors())
-// app.use((req, res, next) => {
-//   res.setHeader('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header(
-//     'Access-Control-Allow-Headers', 
-//     'Origin, X-Requested-With, Content-Type, Accept'
-//   );
-//   next();
-// });
+app.use((req, res, next) => {
+  // res.setHeader('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', '*');
+  // res.header(
+  //   'Access-Control-Allow-Headers', 
+  //   'Origin, X-Requested-With, Content-Type, Accept'
+  // );
+  next();
+});
 
 // app.use(cors({credentials: true, origin: 'http://localhost:3115'}));
 // app.use(cors({credentials: true, origin: 'http://127.0.0.1:5173'}));
