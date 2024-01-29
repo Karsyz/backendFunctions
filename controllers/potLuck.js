@@ -13,7 +13,7 @@ exports.createPotLuckList = async(req, res) => {
   })
   const savedList = await list.save()
   res.status(200)
-  res.send(savedList)
+  res.send(JSON.stringify(savedList))
   } catch (error) {
     console.error(error)
   }
